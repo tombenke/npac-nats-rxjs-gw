@@ -31,7 +31,7 @@ The default parameters can be found in [`src/config.js`](src/config.js):
 
 ## Get Help
 
-To learn more about the tool visit the [API docs](http://tombenke.github.io/npac-nats-rxjs-gw/api/).
+To learn more about the tool visit the [API docs](http://tombenke.github.io/npac-nats-rxjs-gw/).
 
 ## References
 
