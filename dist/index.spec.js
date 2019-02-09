@@ -51,7 +51,7 @@ describe('npacNatsRxjsGw', function () {
     };
 
     //const natsUri = 'nats:localhost:4222'
-    var natsUri = "nats://demo.nats.io:4222";
+    var natsUri = 'nats://demo.nats.io:4222';
 
     var config = _.merge({}, _config2.default, { pdms: { natsUri: natsUri } });
     var adapters = [_npac2.default.mergeConfig(config), _npac2.default.addLogger, pdms.startup, _index.startup];
@@ -59,7 +59,6 @@ describe('npacNatsRxjsGw', function () {
     var terminators = [_index.shutdown, pdms.shutdown];
 
     it('#natsTopicWriter, #natsTopicObservable - RxJS loopback', function (done) {
-
         (0, _npacUtils.catchExitSignals)(sandbox, done);
 
         var setupRxjsLoopbackJob = function setupRxjsLoopbackJob(container, next) {
@@ -79,7 +78,7 @@ describe('npacNatsRxjsGw', function () {
                 console.log('[BEX] >> ' + JSON.stringify(data));
                 stopServer();
             });
-            tpaWriter({ topic: "BEX", type: "theMessageType", payload: "some text payload" });
+            tpaWriter({ topic: 'BEX', type: 'theMessageType', payload: 'some text payload' });
             // No termination of job, the tmaObserver has to catch the answer, and stop the process
             //next(null, null)
         };
@@ -88,7 +87,6 @@ describe('npacNatsRxjsGw', function () {
     }).timeout(100000);
 
     it('#natsTopicTapWriter, #natsTopicObservable - RxJS loopback', function (done) {
-
         (0, _npacUtils.catchExitSignals)(sandbox, done);
 
         var setupRxjsLoopbackJob = function setupRxjsLoopbackJob(container, next) {
@@ -108,7 +106,7 @@ describe('npacNatsRxjsGw', function () {
                 console.log('[BEX] >> ' + JSON.stringify(data));
                 stopServer();
             });
-            tpaWriter({ topic: "BEX", type: "theMessageType", payload: "some text payload" });
+            tpaWriter({ topic: 'BEX', type: 'theMessageType', payload: 'some text payload' });
             // No termination of job, the tmaObserver has to catch the answer, and stop the process
             //next(null, null)
         };

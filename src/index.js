@@ -13,16 +13,17 @@ const { mergeMap, tap, map } = require('rxjs/operators')
  *
  * @function
  */
-const natsTopicObservable = container => (topic, nullPayloadCompletes=false) => new Observable(observer => {
-    container.pdms.add({ pubsub$: true, topic: topic }, (data) => {
-        if (nullPayloadCompletes && (_.isUndefined(data.payload) || data.payload === null)) {
-            console.log(`natsTopicObserver(${topic}).complete with data: ${JSON.stringify(data)}`)
-            observer.complete()
-        } else {
-            observer.next(data)
-        }
+const natsTopicObservable = container => (topic, nullPayloadCompletes = false) =>
+    new Observable(observer => {
+        container.pdms.add({ pubsub$: true, topic: topic }, data => {
+            if (nullPayloadCompletes && (_.isUndefined(data.payload) || data.payload === null)) {
+                console.log(`natsTopicObserver(${topic}).complete with data: ${JSON.stringify(data)}`)
+                observer.complete()
+            } else {
+                observer.next(data)
+            }
+        })
     })
-})
 
 /**
  * Helper function to create a NATS topic observable,
@@ -35,7 +36,10 @@ const natsTopicObservable = container => (topic, nullPayloadCompletes=false) => 
  * @function
  */
 const messageSourceProxy = container => topic =>
-    natsTopicObservable(container)(topic, true).pipe(map(it => it.payload), tap(printMsg(`${topic} >>`)))
+    natsTopicObservable(container)(topic, true).pipe(
+        map(it => it.payload),
+        tap(printMsg(`${topic} >>`))
+    )
 
 /**
  * Send message to NATS topic
@@ -69,12 +73,13 @@ const sendMessage = container => (topic, payload) => natsTopicWriter(container)(
  *
  * @function
  */
-const natsTopicTapWriter = container => topic => mergeMap(data => {
-    return new Promise((resolve, reject) => {
-        container.pdms.act({...data, pubsub$: true, topic: topic })
-        resolve(data)
+const natsTopicTapWriter = container => topic =>
+    mergeMap(data => {
+        return new Promise((resolve, reject) => {
+            container.pdms.act({ ...data, pubsub$: true, topic: topic })
+            resolve(data)
+        })
     })
-})
 
 /**
  * The startup function of the adapter
@@ -125,7 +130,7 @@ const startup = (container, next) => {
  * @function
  */
 const shutdown = (container, next) => {
-    container.logger.info("Shut down npacNatsRxjsGw adapter")
+    container.logger.info('Shut down npacNatsRxjsGw adapter')
     next(null, null)
 }
 

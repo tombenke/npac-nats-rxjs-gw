@@ -168,7 +168,7 @@ var startup = function startup(container, next) {
  * @function
  */
 var shutdown = function shutdown(container, next) {
-    container.logger.info("Shut down npacNatsRxjsGw adapter");
+    container.logger.info('Shut down npacNatsRxjsGw adapter');
     next(null, null);
 };
 

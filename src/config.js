@@ -3,6 +3,5 @@
  */
 
 module.exports = {
-    npacNatsRxjsGw: {
-    }
+    npacNatsRxjsGw: {}
 }

@@ -28,23 +28,14 @@ describe('npacNatsRxjsGw', () => {
     }
 
     //const natsUri = 'nats:localhost:4222'
-    const natsUri = "nats://demo.nats.io:4222"
+    const natsUri = 'nats://demo.nats.io:4222'
 
     const config = _.merge({}, defaults, { pdms: { natsUri: natsUri } })
-    const adapters = [
-        npac.mergeConfig(config),
-        npac.addLogger,
-        pdms.startup,
-        startup
-    ]
+    const adapters = [npac.mergeConfig(config), npac.addLogger, pdms.startup, startup]
 
-    const terminators = [
-        shutdown,
-        pdms.shutdown
-    ]
+    const terminators = [shutdown, pdms.shutdown]
 
-    it('#natsTopicWriter, #natsTopicObservable - RxJS loopback', (done) => {
-
+    it('#natsTopicWriter, #natsTopicObservable - RxJS loopback', done => {
         catchExitSignals(sandbox, done)
 
         const setupRxjsLoopbackJob = (container, next) => {
@@ -62,7 +53,7 @@ describe('npacNatsRxjsGw', () => {
                 console.log(`[BEX] >> ${JSON.stringify(data)}`)
                 stopServer()
             })
-            tpaWriter({ topic: "BEX", type: "theMessageType", payload: "some text payload" })
+            tpaWriter({ topic: 'BEX', type: 'theMessageType', payload: 'some text payload' })
             // No termination of job, the tmaObserver has to catch the answer, and stop the process
             //next(null, null)
         }
@@ -70,14 +61,18 @@ describe('npacNatsRxjsGw', () => {
         npacStart(adapters, [setupRxjsLoopbackJob, sendAndReceiveJob], terminators)
     }).timeout(100000)
 
-    it('#natsTopicTapWriter, #natsTopicObservable - RxJS loopback', (done) => {
-
+    it('#natsTopicTapWriter, #natsTopicObservable - RxJS loopback', done => {
         catchExitSignals(sandbox, done)
 
         const setupRxjsLoopbackJob = (container, next) => {
             const tpaObservable = container.npacNatsRxjsGw.natsTopicObservable('CLX')
             const tmaTapWriter = container.npacNatsRxjsGw.natsTopicTapWriter('BEX')
-            tpaObservable.pipe(map(it => it), tmaTapWriter).subscribe()
+            tpaObservable
+                .pipe(
+                    map(it => it),
+                    tmaTapWriter
+                )
+                .subscribe()
             next(null, null)
         }
 
@@ -89,7 +84,7 @@ describe('npacNatsRxjsGw', () => {
                 console.log(`[BEX] >> ${JSON.stringify(data)}`)
                 stopServer()
             })
-            tpaWriter({ topic: "BEX", type: "theMessageType", payload: "some text payload" })
+            tpaWriter({ topic: 'BEX', type: 'theMessageType', payload: 'some text payload' })
             // No termination of job, the tmaObserver has to catch the answer, and stop the process
             //next(null, null)
         }

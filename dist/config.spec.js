@@ -16,7 +16,6 @@ after(function (done) {
 });
 
 describe('npacNatsRxjsGw.config', function () {
-
     it('#defaults', function (done) {
         var expected = {
             npacNatsRxjsGw: {}
