@@ -1,7 +1,7 @@
 npac-nats-rxjs-gw
 =================
 
-[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![npm version][npm-badge]][npm-url]
 [![Build Status][travis-badge]][travis-url]
 [![Coveralls][BadgeCoveralls]][Coveralls]
