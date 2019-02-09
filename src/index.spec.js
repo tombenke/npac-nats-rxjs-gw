@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import defaults from './config'
 import * as pdms from 'npac-pdms-hemera-adapter'
 import { startup, shutdown } from './index'
-import { removeSignalHandlers, catchExitSignals, npacStart } from './npacUtils'
+import { removeSignalHandlers, catchExitSignals, npacStart } from 'npac'
 import { map } from 'rxjs/operators'
 
 describe('npacNatsRxjsGw', () => {

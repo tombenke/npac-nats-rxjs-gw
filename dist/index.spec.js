@@ -22,8 +22,6 @@ var pdms = _interopRequireWildcard(_npacPdmsHemeraAdapter);
 
 var _index = require('./index');
 
-var _npacUtils = require('./npacUtils');
-
 var _operators = require('rxjs/operators');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -34,13 +32,13 @@ describe('npacNatsRxjsGw', function () {
     var sandbox = void 0;
 
     beforeEach(function (done) {
-        (0, _npacUtils.removeSignalHandlers)();
+        (0, _npac.removeSignalHandlers)();
         sandbox = _sinon2.default.sandbox.create({});
         done();
     });
 
     afterEach(function (done) {
-        (0, _npacUtils.removeSignalHandlers)();
+        (0, _npac.removeSignalHandlers)();
         sandbox.restore();
         done();
     });
@@ -59,7 +57,7 @@ describe('npacNatsRxjsGw', function () {
     var terminators = [_index.shutdown, pdms.shutdown];
 
     it('#natsTopicWriter, #natsTopicObservable - RxJS loopback', function (done) {
-        (0, _npacUtils.catchExitSignals)(sandbox, done);
+        (0, _npac.catchExitSignals)(sandbox, done);
 
         var setupRxjsLoopbackJob = function setupRxjsLoopbackJob(container, next) {
             var tpaObservable = container.npacNatsRxjsGw.natsTopicObservable('CLX');
@@ -83,11 +81,11 @@ describe('npacNatsRxjsGw', function () {
             //next(null, null)
         };
 
-        (0, _npacUtils.npacStart)(adapters, [setupRxjsLoopbackJob, sendAndReceiveJob], terminators);
+        (0, _npac.npacStart)(adapters, [setupRxjsLoopbackJob, sendAndReceiveJob], terminators);
     }).timeout(100000);
 
     it('#natsTopicTapWriter, #natsTopicObservable - RxJS loopback', function (done) {
-        (0, _npacUtils.catchExitSignals)(sandbox, done);
+        (0, _npac.catchExitSignals)(sandbox, done);
 
         var setupRxjsLoopbackJob = function setupRxjsLoopbackJob(container, next) {
             var tpaObservable = container.npacNatsRxjsGw.natsTopicObservable('CLX');
@@ -111,6 +109,6 @@ describe('npacNatsRxjsGw', function () {
             //next(null, null)
         };
 
-        (0, _npacUtils.npacStart)(adapters, [setupRxjsLoopbackJob, sendAndReceiveJob], terminators);
+        (0, _npac.npacStart)(adapters, [setupRxjsLoopbackJob, sendAndReceiveJob], terminators);
     }).timeout(100000);
 });
