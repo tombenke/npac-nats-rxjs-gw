@@ -1,7 +1,7 @@
 {
   "name": "npac-nats-rxjs-gw",
   "description": "npac adapter that provides gateway functionalities between NATS and RxJS pipelines",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "nats",
     "rxjs",
