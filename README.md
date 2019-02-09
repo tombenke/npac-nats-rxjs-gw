@@ -22,7 +22,7 @@ This module uses the `config.npacNatsRxjsGw` property to gain its configuration 
 
 The default parameters can be found in [`src/config.js`](src/config.js):
 
-```JSON
+```JavaScript
 {
     npacNatsRxjsGw: {
     }
