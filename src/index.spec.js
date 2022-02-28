@@ -28,7 +28,7 @@ describe('npacNatsRxjsGw', () => {
     }
 
     //const natsUri = 'nats:localhost:4222'
-    const natsUri = 'nats://demo.nats.io:4222'
+    const natsUri = 'nats://localhost:4222'
 
     const config = _.merge({}, defaults, { pdms: { natsUri: natsUri } })
     const adapters = [npac.mergeConfig(config), npac.addLogger, pdms.startup, startup]
