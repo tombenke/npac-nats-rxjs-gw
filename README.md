@@ -1,10 +1,9 @@
 npac-nats-rxjs-gw
 =================
 
+[![Quality Check](https://github.com/tombenke/npac-nats-rxjs-gw/actions/workflows/quality_check.yml/badge.svg)](https://github.com/tombenke/npac-nats-rxjs-gw/actions/workflows/quality_check.yml)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![npm version][npm-badge]][npm-url]
-[![Build Status][travis-badge]][travis-url]
-[![Coveralls][BadgeCoveralls]][Coveralls]
 
 ## About
 
@@ -44,7 +43,3 @@ project archetype, using the [kickoff](https://github.com/tombenke/kickoff) util
 
 [npm-badge]: https://badge.fury.io/js/npac-nats-rxjs-gw.svg
 [npm-url]: https://badge.fury.io/js/npac-nats-rxjs-gw
-[travis-badge]: https://api.travis-ci.org/tombenke/npac-nats-rxjs-gw.svg
-[travis-url]: https://travis-ci.org/tombenke/npac-nats-rxjs-gw
-[Coveralls]: https://coveralls.io/github/tombenke/npac-nats-rxjs-gw?branch=master
-[BadgeCoveralls]: https://coveralls.io/repos/github/tombenke/npac-nats-rxjs-gw/badge.svg?branch=master
