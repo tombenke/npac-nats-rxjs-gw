@@ -8,15 +8,14 @@ import { removeSignalHandlers, catchExitSignals, npacStart } from 'npac'
 import { map } from 'rxjs/operators'
 
 describe('npacNatsRxjsGw', () => {
-    let sandbox
+    let sandbox = sinon
 
-    beforeEach(done => {
+    beforeEach((done) => {
         removeSignalHandlers()
-        sandbox = sinon.sandbox.create({})
         done()
     })
 
-    afterEach(done => {
+    afterEach((done) => {
         removeSignalHandlers()
         sandbox.restore()
         done()
@@ -27,7 +26,6 @@ describe('npacNatsRxjsGw', () => {
         process.kill(process.pid, 'SIGTERM')
     }
 
-    //const natsUri = 'nats:localhost:4222'
     const natsUri = 'nats://localhost:4222'
 
     const config = _.merge({}, defaults, { pdms: { natsUri: natsUri } })
@@ -35,13 +33,13 @@ describe('npacNatsRxjsGw', () => {
 
     const terminators = [shutdown, pdms.shutdown]
 
-    it('#natsTopicWriter, #natsTopicObservable - RxJS loopback', done => {
+    it('#natsTopicWriter, #natsTopicObservable - RxJS loopback', (done) => {
         catchExitSignals(sandbox, done)
 
         const setupRxjsLoopbackJob = (container, next) => {
             const tpaObservable = container.npacNatsRxjsGw.natsTopicObservable('CLX')
             const tmaWriter = container.npacNatsRxjsGw.natsTopicWriter('BEX')
-            tpaObservable.pipe(map(it => it)).subscribe(tmaWriter)
+            tpaObservable.pipe(map((it) => it)).subscribe(tmaWriter)
             next(null, null)
         }
 
@@ -49,7 +47,7 @@ describe('npacNatsRxjsGw', () => {
             const tmaObservable = container.npacNatsRxjsGw.natsTopicObservable('BEX')
             const tpaWriter = container.npacNatsRxjsGw.natsTopicWriter('CLX')
 
-            tmaObservable.subscribe(data => {
+            tmaObservable.subscribe((data) => {
                 console.log(`[BEX] >> ${JSON.stringify(data)}`)
                 stopServer()
             })
@@ -61,7 +59,7 @@ describe('npacNatsRxjsGw', () => {
         npacStart(adapters, [setupRxjsLoopbackJob, sendAndReceiveJob], terminators)
     }).timeout(100000)
 
-    it('#natsTopicTapWriter, #natsTopicObservable - RxJS loopback', done => {
+    it('#natsTopicTapWriter, #natsTopicObservable - RxJS loopback', (done) => {
         catchExitSignals(sandbox, done)
 
         const setupRxjsLoopbackJob = (container, next) => {
@@ -69,7 +67,7 @@ describe('npacNatsRxjsGw', () => {
             const tmaTapWriter = container.npacNatsRxjsGw.natsTopicTapWriter('BEX')
             tpaObservable
                 .pipe(
-                    map(it => it),
+                    map((it) => it),
                     tmaTapWriter
                 )
                 .subscribe()
@@ -80,7 +78,7 @@ describe('npacNatsRxjsGw', () => {
             const tmaObservable = container.npacNatsRxjsGw.natsTopicObservable('BEX')
             const tpaWriter = container.npacNatsRxjsGw.natsTopicWriter('CLX')
 
-            tmaObservable.subscribe(data => {
+            tmaObservable.subscribe((data) => {
                 console.log(`[BEX] >> ${JSON.stringify(data)}`)
                 stopServer()
             })

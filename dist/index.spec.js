@@ -29,11 +29,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe('npacNatsRxjsGw', function () {
-    var sandbox = void 0;
+    var sandbox = _sinon2.default;
 
     beforeEach(function (done) {
         (0, _npac.removeSignalHandlers)();
-        sandbox = _sinon2.default.sandbox.create({});
         done();
     });
 
@@ -48,8 +47,7 @@ describe('npacNatsRxjsGw', function () {
         process.kill(process.pid, 'SIGTERM');
     };
 
-    //const natsUri = 'nats:localhost:4222'
-    var natsUri = 'nats://demo.nats.io:4222';
+    var natsUri = 'nats://localhost:4222';
 
     var config = _.merge({}, _config2.default, { pdms: { natsUri: natsUri } });
     var adapters = [_npac2.default.mergeConfig(config), _npac2.default.addLogger, pdms.startup, _index.startup];

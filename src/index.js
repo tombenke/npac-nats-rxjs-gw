@@ -13,21 +13,23 @@ const { mergeMap, tap, map } = require('rxjs/operators')
  *
  * @function
  */
-const natsTopicObservable = container => (topic, nullPayloadCompletes = false) =>
-    new Observable(observer => {
-        container.pdms.add({ pubsub$: true, topic: topic }, data => {
-            if (nullPayloadCompletes && (_.isUndefined(data.payload) || data.payload === null)) {
-                console.log(`natsTopicObserver(${topic}).complete with data: ${JSON.stringify(data)}`)
-                observer.complete()
-            } else {
-                observer.next(data)
-            }
+const natsTopicObservable =
+    (container) =>
+    (topic, nullPayloadCompletes = false) =>
+        new Observable((observer) => {
+            container.pdms.add({ pubsub$: true, topic: topic }, (data) => {
+                if (nullPayloadCompletes && (_.isUndefined(data.payload) || data.payload === null)) {
+                    console.log(`natsTopicObserver(${topic}).complete with data: ${JSON.stringify(data)}`)
+                    observer.complete()
+                } else {
+                    observer.next(data)
+                }
+            })
         })
-    })
 
 /**
  * Helper function to create a NATS topic observable,
- * that also prints the incoming data for debgging purposes
+ * that also prints the incoming data for debugging purposes
  *
  * @arg {String} topic - The name of the NATS topic to observe
  *
@@ -35,9 +37,9 @@ const natsTopicObservable = container => (topic, nullPayloadCompletes = false) =
  *
  * @function
  */
-const messageSourceProxy = container => topic =>
+const messageSourceProxy = (container) => (topic) =>
     natsTopicObservable(container)(topic, true).pipe(
-        map(it => it.payload),
+        map((it) => it.payload),
         tap(printMsg(`${topic} >>`))
     )
 
@@ -50,7 +52,8 @@ const messageSourceProxy = container => topic =>
  *
  * @function
  */
-const natsTopicWriter = container => topic => payload => container.pdms.act({ pubsub$: true, topic: topic, payload })
+const natsTopicWriter = (container) => (topic) => (payload) =>
+    container.pdms.act({ pubsub$: true, topic: topic, payload })
 
 /**
  * Send message to NATS topic
@@ -62,7 +65,7 @@ const natsTopicWriter = container => topic => payload => container.pdms.act({ pu
  *
  * @function
  */
-const sendMessage = container => (topic, payload) => natsTopicWriter(container)(topic)(payload)
+const sendMessage = (container) => (topic, payload) => natsTopicWriter(container)(topic)(payload)
 
 /**
  * A tap operator, that passes through the input data, but also writes it to a NATS topic
@@ -73,8 +76,8 @@ const sendMessage = container => (topic, payload) => natsTopicWriter(container)(
  *
  * @function
  */
-const natsTopicTapWriter = container => topic =>
-    mergeMap(data => {
+const natsTopicTapWriter = (container) => (topic) =>
+    mergeMap((data) => {
         return new Promise((resolve, reject) => {
             container.pdms.act({ ...data, pubsub$: true, topic: topic })
             resolve(data)

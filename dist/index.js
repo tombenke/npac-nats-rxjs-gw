@@ -50,7 +50,7 @@ var natsTopicObservable = function natsTopicObservable(container) {
 
 /**
  * Helper function to create a NATS topic observable,
- * that also prints the incoming data for debgging purposes
+ * that also prints the incoming data for debugging purposes
  *
  * @arg {String} topic - The name of the NATS topic to observe
  *
